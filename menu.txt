@@ -1,0 +1,2 @@
+Fish and Chips	150	10	fish-and-chips-01	[fish-and-chips-02]	hlavní jídlo
+Schnitzel	180	12	schnitzel-01	[schnitzel-02]	hlavní jídlo

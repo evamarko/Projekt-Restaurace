@@ -1,2 +1,8 @@
-package PACKAGE_NAME;public class OrderException {
+public class OrderException extends Exception {
+    public OrderException(String message) {
+        super(message);
+    }
 }
+
+
+
