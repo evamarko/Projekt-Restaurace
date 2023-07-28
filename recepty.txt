@@ -1,2 +1,3 @@
-Fish and Chips	150	10	fish-and-chips-01	[fish-and-chips-02]	hlavní jídlo
-Nachos	130	8	nachos-01	[nachos-O2]	hlavní jídlo
+Kuřecí řízek obalovaný 150 g	230	15	blank	[]	hlavní jídlo
+Hranolky 150 g	80	5	blank	[]	hlavní jídlo
+Pstruh na víně 200 g	270	20	blank	[]	hlavní jídlo

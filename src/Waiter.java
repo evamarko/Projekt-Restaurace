@@ -1,10 +1,8 @@
-public class Waiter {
+public class Waiter  {
     private int waiterNumber;
-    private int numOfOrders;
 
     public Waiter(int waiterNumber) {
         this.waiterNumber = waiterNumber;
-        this.numOfOrders = 0;
     }
 
     public int getWaiterNumber() {
@@ -15,11 +13,4 @@ public class Waiter {
         this.waiterNumber = waiterNumber;
     }
 
-    public int getNumOfOrders() {
-        return numOfOrders;
-    }
-
-    public void setNumOfOrders(int numOfOrders) {
-        this.numOfOrders = numOfOrders;
-    }
 }

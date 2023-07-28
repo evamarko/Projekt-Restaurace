@@ -1,2 +1,2 @@
-Fish and Chips	150	10	fish-and-chips-01	[fish-and-chips-02]	hlavní jídlo
-Schnitzel	180	12	schnitzel-01	[schnitzel-02]	hlavní jídlo
+Kuřecí řízek obalovaný 150 g	230	15	blank	[]	hlavní jídlo
+Pstruh na víně 200 g	270	20	blank	[]	hlavní jídlo
