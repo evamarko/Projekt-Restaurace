@@ -7,8 +7,17 @@ import java.util.*;
 
 public class RestaurantManager {
     private List<Order> orders = new ArrayList<>();
+    List<Dish> dishes = new ArrayList<>();
+    Order order = new Order();
 
-    //3. Vyzkoušej přidat objednávku jídla, které není v menu — aplikace musí ohlásit chybu.
+    public List<Order> getOrders() {
+        return new ArrayList<>(orders);
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
     public void addOrder(Order order) {
         if (order.getOrderedDish().getOnMenu()) {
             orders.add(order);
@@ -21,27 +30,8 @@ public class RestaurantManager {
         orders.remove(order);
     }
 
-    public List<Order> getOrders() {
-        return new ArrayList<>(orders);
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
-    }
-
-    //1. Načti stav evidence z disku.
-    public void exportToFile(String fileName) throws OrderException {
-        try (PrintWriter outputWriter = new PrintWriter(new BufferedWriter(new FileWriter(fileName)))) {
-            for (Order order : orders) {
-                outputWriter.println(order.exportToString());
-            }
-        } catch (IOException e) {
-            throw new OrderException("Nepodařilo se nahrát data do souboru: " + fileName);
-        }
-    }
-
-    //5.1. Kolik objednávek je aktuálně rozpracovaných a nedokončených.
-    public String getCompletedAndUncompletedOrders() {
+    //1. Kolik objednávek je aktuálně rozpracovaných a nedokončených.
+    public String getUncompletedOrders() {
         int numOfUncompletedOrders = 0;
         for (Order order : orders) {
             if (!order.getCompleted()) {
@@ -51,7 +41,7 @@ public class RestaurantManager {
         return "Počet rozpracovaných a nedokončených objednávek: " + numOfUncompletedOrders;
     }
 
-    //5.2. Možnost seřadit objednávky podle času zadání.
+    //2. Možnost seřadit objednávky podle číšníka nebo času zadání.
     public void sortOrdersByTime() {
         Collections.sort(orders, new OrderTimeComparator());
     }
@@ -60,8 +50,7 @@ public class RestaurantManager {
         Collections.sort(orders, new OrderWaiterComparator());
     }
 
-
-    //5.3. Celkovou cenu objednávek pro jednotlivé číšníky (u každého číšníka bude počet jeho zadaných objednávek).
+    //3. Celkovou cenu objednávek pro jednotlivé číšníky (u každého číšníka bude počet jeho zadaných objednávek).
     public BigDecimal getOrderPricePerWaiter(int waiterNumber) {
         BigDecimal orderPrice = BigDecimal.ZERO;
         for (Order order : orders) {
@@ -72,7 +61,6 @@ public class RestaurantManager {
         return orderPrice;
     }
 
-    //5.3. Celkový počet objednávek na číšníka
     public int getNumOfOrdersPerWaiter(int waiterNumber) {
         int numOfOrders = 0;
         for (Order order : orders) {
@@ -83,7 +71,7 @@ public class RestaurantManager {
         return numOfOrders;
     }
 
-    //5.4. Průměrnou dobu zpracování objednávek, které byly zadány v určitém časovém období.
+    //4. Průměrnou dobu zpracování objednávek, které byly zadány v určitém časovém období.
     public long averageTimeToCompleteOrderBetweenGivenTimes(LocalDateTime time1, LocalDateTime time2) throws OrderException {
         long timeToCompleteAllOrders = 0;
         long timeToCompleteOrder;
@@ -102,7 +90,7 @@ public class RestaurantManager {
         }
     }
 
-    //5.5. Seznam jídel, které byly dnes objednány. Bez ohledu na to, kolikrát byly objednány.
+    //5. Seznam jídel, které byly dnes objednány. Bez ohledu na to, kolikrát byly objednány.
     public void getOrderedDishesToday() {
         Set<Dish> setOfDishes = new HashSet<>();
         for (Order order : orders) {
@@ -113,7 +101,7 @@ public class RestaurantManager {
         System.out.println(setOfDishes);
     }
 
-    //5.6. Export seznamu objednávek pro jeden stůl ve formátu (například pro výpis na obrazovku)
+    //6. Export seznamu objednávek pro jeden stůl ve formátu (například pro výpis na obrazovku)
     public void getOrdersPerTable(int tableNumber) {
         int orderNumber = 1;
         if (tableNumber < 9) {
@@ -131,16 +119,23 @@ public class RestaurantManager {
         System.out.println("*******");
     }
 
+    public void exportToFile(String fileName) throws OrderException {
+        try (PrintWriter outputWriter = new PrintWriter(new BufferedWriter(new FileWriter(fileName)))) {
+            for (Order order : orders) {
+                outputWriter.println(order.exportToString());
+            }
+        } catch (IOException e) {
+            throw new OrderException("Nepodařilo se nahrát data do souboru: " + fileName);
+        }
+    }
 
-    /*public void importFromFile(String fileName) throws OrderException {
+    public void importFromFile(String fileName) throws OrderException {
         try (Scanner scanner = new Scanner(new BufferedReader(new FileReader(fileName)))) {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                orders.add(Order.parseOrder(line)); }
+                orders.add(order.parseOrder(line)); }
         } catch (FileNotFoundException e) {
             throw new OrderException("Soubor " + fileName + " nalezen!");
         }
-    }*/
+    }
 }
-
-

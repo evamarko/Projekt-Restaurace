@@ -7,7 +7,7 @@ public class Dish {
     private BigDecimal price;
     private int preparationTime;
     private String imageMain;
-    private List<String> images = new ArrayList<>();
+    private List<String> images;
     private Category category;
     private Boolean isInCookBook = false;
     private Boolean isOnMenu = false;
@@ -20,14 +20,12 @@ public class Dish {
         this.category = category;
     }
 
-    //V systému kvůli budoucímu zobrazování nesmí být jídlo/recept bez fotografie,
-    // ale na serveru je speciální fotografie s názvem blank,
-    // kterou použij jako výchozí pro recepty, které zatím fotografii nemají.
     public Dish(String title, BigDecimal price, int preparationTime, Category category) {
         this(title, price, preparationTime, "blank" , category);
     }
 
-    public String getTitle(Dish orderedDish) {
+
+    public String getTitle() {
         return title;
     }
 
@@ -67,7 +65,6 @@ public class Dish {
         this.images = images;
     }
 
-    //Má také jít přidat nebo odebrat fotografie.
     public void addImage(String image) {
         this.images.add(image);
     }
@@ -101,7 +98,7 @@ public class Dish {
     }
 
     public static Dish parseDish(String data) throws OrderException {
-        String [] items = new String[0];
+        String [] items;
         try {
             items = data.split("\t");
             String title = items[0];
@@ -111,12 +108,12 @@ public class Dish {
             Category category = Category.valueOf(items[4]);
             return new Dish(title, price, preparationTime, imageMain, category);
         } catch (IllegalArgumentException e) {
-            throw new OrderException("Poškozený soubor, nelze načíst data z: ");
+            throw new OrderException("Chybně zadaná data, nepodařilo se načíst data ze souboru.");
         }
     }
 
     public String exportToString() {
-        return title + "\t" + price + "\t" + preparationTime + "\t" + imageMain + "\t" + images + "\t" + category;
+        return title + "\t" + price + "\t" + preparationTime + "\t" + imageMain + "\t" + category;
     }
 
     @Override

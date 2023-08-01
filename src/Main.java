@@ -34,7 +34,7 @@ public class Main {
         Dish hranolky = new Dish("Hranolky 150 g", BigDecimal.valueOf(80), 5, Category.MAIN);
         Dish pstruh = new Dish("Pstruh na víně 200 g", BigDecimal.valueOf(270), 20, Category.MAIN);
 
-        //První a třetí jídlo zařaď do aktuálního menu, druhé jídlo nikoli. Případné další můžeš zařadit dle potřeby.
+        //První a třetí jídlo zařaď do aktuálního menu, druhé jídlo nikoli.
         cookBookDishes.addDishToCookBook(kureciRizek);
         cookBookDishes.addDishToCookBook(hranolky);
         cookBookDishes.addDishToCookBook(pstruh);
@@ -69,13 +69,12 @@ public class Main {
 
         //5. Použij všechny připravené metody pro získání informací pro management — údaje vypisuj na obrazovku.
         //5.1. Kolik objednávek je aktuálně rozpracovaných a nedokončených.
-        System.out.println(restaurantOrders.getCompletedAndUncompletedOrders());
+        System.out.println(restaurantOrders.getUncompletedOrders());
 
-        //5.2. Možnost seřadit objednávky podle času zadání.
+        //5.2. Možnost seřadit objednávky podle číšníka nebo času zadání.
         restaurantOrders.sortOrdersByTime();
         restaurantOrders.getOrders().forEach(c -> System.out.println(c.getOrderedDish() + ": " + c.getOrderedTime()));
 
-        //5.2. Možnost seřadit objednávky podle číšníka.
         restaurantOrders.sortOrdersByWaiter();
         restaurantOrders.getOrders().forEach(c -> System.out.println( "Číšník č. " + c.getWaiterNumber() + ": " + c.getOrderedDish()));
 
@@ -115,7 +114,6 @@ public class Main {
             System.err.println(e.getLocalizedMessage());
         }
 
-
         // 9. Připrav do složky projektu poškozený vstupní soubor/poškozené vstupní soubory, které se nepodaří načíst.
         //Aplikace se při spuštění s těmito soubory musí zachovat korektně — nesmí spadnout.
         //10.Pokud tyto soubory posléze smažeme, aplikace musí fungovat a můžeme pokračovat v testování.
@@ -124,6 +122,20 @@ public class Main {
         } catch (OrderException e) {
             System.err.println(e.getLocalizedMessage());
         }
+
+        try {
+            restaurantOrders.importFromFile("nove-objednavky.txt");
+        } catch (OrderException e) {
+            System.err.println(e.getLocalizedMessage());
+        }
+
+        try {
+            restaurantOrders.exportToFile("objednavky.txt");
+        } catch (OrderException e) {
+            System.err.println(e.getLocalizedMessage());
+        }
+
     }
+
 }
 

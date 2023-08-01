@@ -11,8 +11,9 @@ public class Order {
     private int numOfOrderedDishes = 1;
     private Customer customer;
     private Boolean completed = false;
-
-    private int orderNumber;
+    DishList dishList = new DishList();
+    public Order() {
+    }
 
     public Order(int tableNumber, LocalDateTime orderedTime, int waiterNumber, Dish orderedDish) {
         this.tableNumber = tableNumber;
@@ -24,6 +25,11 @@ public class Order {
     public Order(int tableNumber, LocalDateTime orderedTime, LocalDateTime fulfilmentTime, int waiterNumber, Dish orderedDish) {
         this (tableNumber, orderedTime, waiterNumber, orderedDish);
         setFulfilmentTime(fulfilmentTime);
+    }
+
+    public Order(int tableNumber, LocalDateTime orderedTime, LocalDateTime fulfilmentTime, int waiterNumber, Dish orderedDish, int numOfOrderedDishes) {
+        this (tableNumber, orderedTime, fulfilmentTime, waiterNumber, orderedDish);
+        this.numOfOrderedDishes = numOfOrderedDishes;
     }
 
     public int getTableNumber() {
@@ -59,6 +65,7 @@ public class Order {
         this.waiterNumber = waiterNumber;
     }
 
+
     public Dish getOrderedDish() {
         return orderedDish;
     }
@@ -91,14 +98,6 @@ public class Order {
         this.completed = completed;
     }
 
-    public int getOrderNumber() {
-        return orderNumber;
-    }
-
-    public void setOrderNumber(int orderNumber) {
-        this.orderNumber = orderNumber;
-    }
-
     public String getNumberOfDishesIfBiggerThenOne() {
         String result = "";
         if (numOfOrderedDishes > 1) {
@@ -112,10 +111,9 @@ public class Order {
     }
 
     public String exportToString() {
-        return tableNumber + "\t" + orderedTime + "\t" + fulfilmentTime + "\t" + waiterNumber + "\t" + orderedDish + "\t" + numOfOrderedDishes  + "\t" + customer + "\t" + completed;
+        return tableNumber + "\t" + orderedTime + "\t" + fulfilmentTime + "\t" + waiterNumber + "\t" + orderedDish + "\t" + numOfOrderedDishes;
     }
 
-    //6.  Export seznamu objednávek pro jeden stůl ve formátu (například pro výpis na obrazovku)
     public String orderToPrint() {
         return "." + " "
                 + orderedDish + " "
@@ -127,30 +125,24 @@ public class Order {
                 + "číšník č. " + waiterNumber;
     }
 
-    /*public Order parseOrder(String data) throws OrderException {
-        String [] items = new String[0];
-            items = data.split("\t");
-            int tableNumber = Integer.parseInt(items[0]);
-            LocalDateTime orderedTime = LocalDateTime.parse(items[1]);
-            LocalDateTime fulfilmentTime = LocalDateTime.parse(items[2]);
-            int waiterNumber = Integer.parseInt(items[3]);
-            Dish orderedDish = items[4];
-
-            return new Order(tableNumber, orderedTime, fulfilmentTime, waiterNumber, orderedDish);
-    }*/
+    public Order parseOrder(String data) throws OrderException {
+        String [] items;
+        items = data.split("\t");
+        int tableNumber = Integer.parseInt(items[0]);
+        LocalDateTime orderedTime = LocalDateTime.parse(items[1]);
+        LocalDateTime fulfilmentTime = LocalDateTime.parse(items[2]);
+        int waiterNumber = Integer.parseInt(items[3]);
+        Dish orderedDish = dishList.getDishObject(items[4]);
+        int numOfOrderedDishes = Integer.parseInt(items[5]);
+        return new Order(tableNumber, orderedTime, fulfilmentTime, waiterNumber, orderedDish, numOfOrderedDishes);
+    }
 
     @Override
     public String toString() {
         return "Order{" +
                 "tableNumber=" + tableNumber +
                 ", orderedTime=" + orderedTime +
-                ", fulfilmentTime=" + fulfilmentTime +
-                ", waiterNumber=" + waiterNumber +
                 ", orderedDish=" + orderedDish +
-                ", numOfOrderedDishes=" + numOfOrderedDishes +
-                ", customer=" + customer +
-                ", completed=" + completed +
-                ", orderNumber=" + orderNumber +
                 '}';
     }
 }

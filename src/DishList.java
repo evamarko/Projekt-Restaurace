@@ -5,14 +5,10 @@ import java.util.Scanner;
 
 public class DishList {
 
-    List<Dish> dishes = new ArrayList<>();
+     List<Dish> dishes = new ArrayList<>();
 
     public List<Dish> getDishes() {
         return new ArrayList<>(dishes);
-    }
-
-    public void getDish(int index) {
-        dishes.get(index);
     }
 
     public void setDishes(List<Dish> dishes) {
@@ -23,7 +19,6 @@ public class DishList {
         dishes.remove(dish);
     }
 
-    //1. Načti stav evidence z disku.
     public void exportToFile(String fileName) throws OrderException {
         try (PrintWriter outputWriter = new PrintWriter(new BufferedWriter(new FileWriter(fileName)))) {
             for (Dish dish : dishes) {
@@ -42,5 +37,14 @@ public class DishList {
         } catch (FileNotFoundException e) {
             throw new OrderException("Soubor " + fileName + " nenalezen!");
         }
+    }
+
+    public Dish getDishObject(String dishTitle) {
+        for (Dish dish : dishes) {
+            if (dishTitle == dish.getTitle()) {
+                return dish;
+            }
+        }
+        return null;
     }
 }
