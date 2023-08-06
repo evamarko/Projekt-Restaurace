@@ -24,7 +24,6 @@ public class Dish {
         this(title, price, preparationTime, "blank" , category);
     }
 
-
     public String getTitle() {
         return title;
     }

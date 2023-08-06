@@ -45,14 +45,11 @@ public class Main {
         //Vytvoř alespoň tři objednávky pro stůj číslo 15 a jednu pro stůj číslo 2.
         //Objednávky řeší alespoň dva různí číšníci.
         //Min. dvě objednávky jsou již uzavřené, minimálně dvě ještě nikoli.
-        Waiter waiter1 = new Waiter (1);
-        Waiter waiter2 = new Waiter (2);
+        Order order1 = new Order(15, LocalDateTime.of(2023, 7, 6, 14, 00), LocalDateTime.of(2023, 7, 6, 14, 15), 1, pstruh, 1);
+        Order order2 = new Order(15, LocalDateTime.of(2023, 7, 6, 14, 00), LocalDateTime.of(2023, 7, 6, 14, 15), 2, pstruh, 1);
 
-        Order order1 = new Order(15, LocalDateTime.of(2023, 7, 6, 14, 00), LocalDateTime.of(2023, 7, 6, 14, 15), 1, pstruh);
-        Order order2 = new Order(15, LocalDateTime.of(2023, 7, 6, 14, 00), LocalDateTime.of(2023, 7, 6, 14, 15), 2, pstruh);
-
-        Order order3 = new Order(15, LocalDateTime.of(2023, 7, 6, 14, 10), 1, kureciRizek);
-        Order order4 = new Order(2, LocalDateTime.of(2023, 7, 6, 14, 5), 2, pstruh);
+        Order order3 = new Order(15, LocalDateTime.of(2023, 7, 6, 14, 10), 1, kureciRizek, 1);
+        Order order4 = new Order(2, LocalDateTime.of(2023, 7, 6, 14, 5), 2, pstruh, 1);
 
         restaurantOrders.addOrder(order1);
         restaurantOrders.addOrder(order2);
@@ -60,7 +57,7 @@ public class Main {
         restaurantOrders.addOrder(order4);
 
         //3. Vyzkoušej přidat objednávku jídla, které není v menu — aplikace musí ohlásit chybu.
-        Order order5 = new Order(2, LocalDateTime.of(2023, 7, 6, 14, 5), 1, hranolky);
+        Order order5 = new Order(2, LocalDateTime.of(2023, 7, 6, 14, 5), 1, hranolky, 1);
         restaurantOrders.addOrder(order5);
 
         //4. Proveď uzavření objednávky.
@@ -79,8 +76,8 @@ public class Main {
         restaurantOrders.getOrders().forEach(c -> System.out.println( "Číšník č. " + c.getWaiterNumber() + ": " + c.getOrderedDish()));
 
         //5.3. Celkovou cenu objednávek pro jednotlivé číšníky (u každého číšníka bude počet jeho zadaných objednávek).
-        System.out.println(restaurantOrders.getOrderPricePerWaiter(1));
-        System.out.println(restaurantOrders.getNumOfOrdersPerWaiter(1));
+        System.out.println(restaurantOrders.getOrderPricePerWaiter(2));
+        System.out.println(restaurantOrders.getNumOfOrdersPerWaiter(2));
 
         //5.4. Průměrnou dobu zpracování objednávek, které byly zadány v určitém časovém období.
         try {
@@ -122,20 +119,6 @@ public class Main {
         } catch (OrderException e) {
             System.err.println(e.getLocalizedMessage());
         }
-
-        try {
-            restaurantOrders.importFromFile("nove-objednavky.txt");
-        } catch (OrderException e) {
-            System.err.println(e.getLocalizedMessage());
-        }
-
-        try {
-            restaurantOrders.exportToFile("objednavky.txt");
-        } catch (OrderException e) {
-            System.err.println(e.getLocalizedMessage());
-        }
-
     }
-
 }
 

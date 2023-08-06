@@ -7,7 +7,6 @@ import java.util.*;
 
 public class RestaurantManager {
     private List<Order> orders = new ArrayList<>();
-    List<Dish> dishes = new ArrayList<>();
     Order order = new Order();
 
     public List<Order> getOrders() {
@@ -113,8 +112,8 @@ public class RestaurantManager {
         for (Order order : orders) {
             if (order.getTableNumber() == tableNumber) {
                 System.out.println(orderNumber + order.orderToPrint());
+                orderNumber += 1;
                 }
-            orderNumber += 1;
         }
         System.out.println("*******");
     }

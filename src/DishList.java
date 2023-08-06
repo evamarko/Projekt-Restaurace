@@ -38,13 +38,4 @@ public class DishList {
             throw new OrderException("Soubor " + fileName + " nenalezen!");
         }
     }
-
-    public Dish getDishObject(String dishTitle) {
-        for (Dish dish : dishes) {
-            if (dishTitle == dish.getTitle()) {
-                return dish;
-            }
-        }
-        return null;
-    }
 }
